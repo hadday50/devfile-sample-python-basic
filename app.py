@@ -20,7 +20,19 @@ def home():
     """
 @app.route("/view")
 def view_data():
-    return "Här kommer MMD-data att visas."
+    username = os.environ.get("MMD_USERNAME")
+    password = os.environ.get("MMD_PASSWORD")
+
+    response = requests.get(
+        MMD_URL,
+        auth=(username, password),
+        timeout=60
+    )
+
+    response.raise_for_status()
+    json_data = response.json()
+
+    return f"Antal förskolor från MMD: {len(json_data)}"
 
 @app.route("/download")
 def download_excel():
