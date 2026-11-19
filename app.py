@@ -1,4 +1,4 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, render_template_string
 import os
 import requests
 from io import BytesIO
@@ -15,8 +15,12 @@ def home():
     <h1>MMD - Förskolor</h1>
     <p>Hämtar förskolor från MMD och skapar en Excel-fil.</p>
     <a href="/download">Hämta Excel-fil</a>
+    <br>
+    <a href="/view">Visa förskolor i webbläsaren</a>
     """
-
+@app.route("/view")
+def view_data():
+    return "Här kommer MMD-data att visas."
 
 @app.route("/download")
 def download_excel():
