@@ -31,7 +31,43 @@ def view_data():
 
     response.raise_for_status()
     json_data = response.json()
-    return f"Antal förskolor från MMD: {len(json_data['data'])}"
+  return render_template_string("""
+<h1>MMD - Förskolor</h1>
+
+<p>Antal förskolor: {{ organisations|length }}</p>
+
+<p>
+    <a href="/">Till startsidan</a> |
+    <a href="/download">Hämta Excel-fil</a>
+</p>
+
+<table border="1" cellpadding="6">
+    <tr>
+        <th>Namn</th>
+        <th>Skolenhetskod</th>
+        <th>HSA</th>
+        <th>AltID</th>
+        <th>Organisation ID</th>
+        <th>OrganisationCode</th>
+        <th>Startdatum</th>
+        <th>Slutdatum</th>
+    </tr>
+
+    {% for organisation in organisations %}
+    {% set identifiers = organisation.get('identifiers') or {} %}
+    <tr>
+        <td>{{ organisation.get('displayName', '') }}</td>
+        <td>{{ identifiers.get('skolenhetskod', '') }}</td>
+        <td>{{ identifiers.get('HSA', '') }}</td>
+        <td>{{ identifiers.get('AltID', '') }}</td>
+        <td>{{ organisation.get('id', '') }}</td>
+        <td>{{ organisation.get('organisationCode', '') }}</td>
+        <td>{{ organisation.get('startDate', '') }}</td>
+        <td>{{ organisation.get('endDate', '') }}</td>
+    </tr>
+    {% endfor %}
+</table>
+""", organisations=json_data["data"])
 
 @app.route("/download")
 def download_excel():
