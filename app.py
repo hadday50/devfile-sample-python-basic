@@ -55,7 +55,8 @@ def view_data():
         <th>Slutdatum</th>
     </tr>
 
-    {% for organisation in organisations %}
+    {% for item in organisations %}
+    {% set organisation = item.get('organisation') or {} %}
     {% set identifiers = organisation.get('identifiers') or {} %}
     <tr>
         <td>{{ organisation.get('displayName', '') }}</td>
