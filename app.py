@@ -1,4 +1,4 @@
-from flask import Flask, send_file, render_template_string
+from flask import Flask, send_file, render_template_string, request
 import os
 import requests
 from io import BytesIO
@@ -13,6 +13,10 @@ MMD_URL = "https://esb.goteborg.se/MMD005_MasterData/Organisations?organisationT
 def home():
     return """
     <h1>MMD - Förskolor</h1>
+    <form method="get" action="/view">
+    <input type="text" name="q" placeholder="Sök namn eller skolenhetskod">
+    <button type="submit">Sök</button>
+</form>
     <p>Hämtar förskolor från MMD och skapar en Excel-fil.</p>
     <a href="/download">Hämta Excel-fil</a>
     <br>
@@ -31,6 +35,21 @@ def view_data():
 
     response.raise_for_status()
     json_data = response.json()
+    query = request.args.get("q", "").strip().lower()
+    organisations = json_data["data"]
+    filtered_organisations = []
+    for item in organisations:
+    organisation = item.get("organisation") or {}
+    name = organisation.get("displayName", "").lower()
+    identifiers = organisation.get("organisationIdentifiers") or []
+    skolenhetskod = ""
+
+    for identifier in identifiers:
+        if identifier.get("type") == "Skolenhetskod":
+            skolenhetskod = str(identifier.get("value", "")).lower()
+
+    if not query or query in name or query in skolenhetskod:
+        filtered_organisations.append(item)
 
     return render_template_string("""
 <h1>MMD - Förskolor</h1>
@@ -79,7 +98,7 @@ def view_data():
     </tr>
     {% endfor %}
 </table>
-""", organisations=json_data["data"])
+""", organisations=filtered_organisations)
 
 @app.route("/download")
 def download_excel():
