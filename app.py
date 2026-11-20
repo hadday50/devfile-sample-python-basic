@@ -38,7 +38,7 @@ def view_data():
     query = request.args.get("q", "").strip().lower()
     organisations = json_data["data"]
     filtered_organisations = []
-    for item in organisations:
+  for item in organisations:
     organisation = item.get("organisation") or {}
     name = organisation.get("displayName", "").lower()
     identifiers = organisation.get("organisationIdentifiers") or []
@@ -51,7 +51,7 @@ def view_data():
     if not query or query in name or query in skolenhetskod:
         filtered_organisations.append(item)
 
-    return render_template_string("""
+  return render_template_string("""
 <h1>MMD - Förskolor</h1>
 
 <p>Antal förskolor: {{ organisations|length }}</p>
