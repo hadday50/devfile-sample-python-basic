@@ -31,7 +31,6 @@ def view_data():
 
     response.raise_for_status()
     json_data = response.json()
-    print(json_data["data"][0])
 
     return render_template_string("""
 <h1>MMD - Förskolor</h1>
