@@ -57,12 +57,22 @@ def view_data():
 
     {% for item in organisations %}
     {% set organisation = item.get('organisation') or {} %}
-    {% set identifiers = organisation.get('identifiers') or {} %}
+    {% set identifiers = organisation.get('organisationIdentifiers') or [] %}
+    {% set ns = namespace(skolenhetskod='', hsa='', altid='') %}
+    {% for identifier in identifiers %}
+    {% if identifier.get('type') == 'Skolenhetskod' %}
+    {% set ns.skolenhetskod = identifier.get('value', '') %}
+    {% elif identifier.get('type') == 'HSA' %}
+        {% set ns.hsa = identifier.get('value', '') %}
+    {% elif identifier.get('type') == 'AltID' %}
+        {% set ns.altid = identifier.get('value', '') %}
+        {% endif %}
+        {% endfor %}
     <tr>
         <td>{{ organisation.get('displayName', '') }}</td>
-        <td>{{ identifiers.get('skolenhetskod', '') }}</td>
-        <td>{{ identifiers.get('HSA', '') }}</td>
-        <td>{{ identifiers.get('AltID', '') }}</td>
+        <td>{{ ns.skolenhetskod }}</td>
+        <td>{{ ns.hsa }}</td>
+        <td>{{ ns.altid }}</td>
         <td>{{ organisation.get('id', '') }}</td>
         <td>{{ organisation.get('organisationCode', '') }}</td>
         <td>{{ organisation.get('startDate', '') }}</td>
