@@ -31,8 +31,7 @@ def view_data():
 
     response.raise_for_status()
     json_data = response.json()
-
-   return f"Antal förskolor från MMD: {len(json_data['data'])}"
+    return f"Antal förskolor från MMD: {len(json_data['data'])}"
 
 @app.route("/download")
 def download_excel():
