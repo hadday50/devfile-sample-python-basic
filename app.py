@@ -55,6 +55,10 @@ def view_data():
 
     return render_template_string("""
 <h1>MMD - Förskolor</h1>
+<form method="get" action="/view">
+    <input type="text" name="q" placeholder="Sök namn eller skolenhetskod">
+    <button type="submit">Sök</button>
+</form>
 
 <p>Antal förskolor: {{ organisations|length }}</p>
 
