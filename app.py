@@ -80,6 +80,7 @@ def view_data():
 <form method="get" action="/view">
     <input type="text" name="q" placeholder="Sök namn eller skolenhetskod">
     <button type="submit">Sök</button>
+    <a href="/view">Visa alla</a>
 </form>
 
 <p>Antal förskolor: {{ organisations|length }}</p>
