@@ -83,11 +83,20 @@ def view_data():
     }
 
     th {
-        background-color: #f2f2f2;
-    }
+    background-color: #f2f2f2;
+}
+
+th[onclick] {
+    cursor: pointer;
+}
+
+th[onclick]:hover {
+    background-color: #dfe7ef;
+    text-decoration: underline;
+}
 </style>
 <form method="get" action="/view">
-    <input type="text" name="q" placeholder="Sök namn eller skolenhetskod">
+    <input type="text" name="q" placeholder="Sök namn, skolenhetskod, HSA eller AltID">
     <button type="submit">Sök</button>
     <a href="/view">Visa alla</a>
 </form>
