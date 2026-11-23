@@ -143,7 +143,11 @@ function sortTable(columnIndex) {
     const rows = Array.from(table.rows).slice(1);
     const direction = sortDirections[columnIndex] === "asc" ? "desc" : "asc";
 sortDirections[columnIndex] = direction;
-
+const headers = table.querySelectorAll("th");
+headers.forEach(function(header) {
+    header.innerText = header.innerText.replace(" ▲", "").replace(" ▼", "");
+});
+headers[columnIndex].innerText += direction === "asc" ? " ▲" : " ▼";
     rows.sort(function(a, b) {
         const valueA = a.cells[columnIndex].innerText.trim();
         const valueB = b.cells[columnIndex].innerText.trim();
