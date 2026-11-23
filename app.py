@@ -122,8 +122,8 @@ def view_data():
         <td>{{ ns.altid }}</td>
         <td>{{ organisation.get('id', '') }}</td>
         <td>{{ organisation.get('organisationCode', '') }}</td>
-        <td>{{ organisation.get('startDate', '') }}</td>
-        <td>{{ organisation.get('endDate', '') }}</td>
+        <td>{{ organisation.get('startDate', '')[:10] }}</td>
+        <td>{{ organisation.get('endDate', '')[:10] }}</td>
     </tr>
     {% endfor %}
 </table>
