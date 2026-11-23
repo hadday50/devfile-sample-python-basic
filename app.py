@@ -59,6 +59,9 @@ def view_data():
 
         if not query or query in name or query in skolenhetskod or query in hsa or query in altid:
             filtered_organisations.append(item)
+    filtered_organisations.sort(
+        key=lambda item: (item.get("organisation") or {}).get("displayName", "").lower()
+)
 
     return render_template_string("""
 <h1>MMD - Förskolor</h1>
