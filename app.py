@@ -16,6 +16,7 @@ def home():
     <form method="get" action="/view">
     <input type="text" name="q" placeholder="Sök namn eller skolenhetskod">
     <button type="submit">Sök</button>
+    <a href="/view">Visa alla</a>
 </form>
     <p>Hämtar förskolor från MMD och skapar en Excel-fil.</p>
     <a href="/download">Hämta Excel-fil</a>
