@@ -14,7 +14,7 @@ def home():
     return """
     <h1>MMD - Förskolor</h1>
     <form method="get" action="/view">
-    <input type="text" name="q" placeholder="Sök namn eller skolenhetskod">
+    <input type="text" name="q" value="{{ query }}" placeholder="Sök namn eller skolenhetskod">
     <button type="submit">Sök</button>
     <a href="/view">Visa alla</a>
 </form>
@@ -127,7 +127,7 @@ def view_data():
     </tr>
     {% endfor %}
 </table>
-""", organisations=filtered_organisations)
+""", organisations=filtered_organisations, query=query)
 
 @app.route("/download")
 def download_excel():
