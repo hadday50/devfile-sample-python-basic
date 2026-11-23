@@ -52,9 +52,9 @@ def view_data():
         for identifier in identifiers:
             if identifier.get("type") == "Skolenhetskod":
                 skolenhetskod = str(identifier.get("value", "")).lower()
-                elif identifier.get("type") == "HSA":
+            elif identifier.get("type") == "HSA":
                     hsa = str(identifier.get("value", "")).lower()
-                elif identifier.get("type") == "AltID":
+            elif identifier.get("type") == "AltID":
                     altid = str(identifier.get("value", "")).lower()
 
         if not query or query in name or query in skolenhetskod or query in hsa or query in altid:
