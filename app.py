@@ -14,7 +14,7 @@ def home():
     return """
     <h1>MMD - Förskolor</h1>
     <form method="get" action="/view">
-    <input type="text" name="q" value="{{ query }}" placeholder="Sök namn, skolenhetskod, HSA eller AltID"
+    <input type="text" name="q" placeholder="Sök namn, skolenhetskod, HSA eller AltID">
     <button type="submit">Sök</button>
     <a href="/view">Visa alla</a>
 </form>
