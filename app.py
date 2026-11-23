@@ -99,16 +99,16 @@ def view_data():
     <a href="/download">Hämta Excel-fil</a>
 </p>
 
-<table border="1" cellpadding="6">
+<table id="forskolorTable" border="1" cellpadding="6">
     <tr>
-        <th>Namn</th>
-        <th>Skolenhetskod</th>
-        <th>HSA</th>
-        <th>AltID</th>
-        <th>Organisation ID</th>
-        <th>OrganisationCode</th>
-        <th>Startdatum</th>
-        <th>Slutdatum</th>
+        <th onclick="sortTable(0)" style="cursor: pointer;">Namn</th>
+        <th onclick="sortTable(1)" style="cursor: pointer;">Skolenhetskod</th>
+        <th onclick="sortTable(2)" style="cursor: pointer;">HSA</th>
+        <th onclick="sortTable(3)" style="cursor: pointer;">AltID</th>
+        <th onclick="sortTable(4)" style="cursor: pointer;">Organisation ID</th>
+        <th onclick="sortTable(5)" style="cursor: pointer;">OrganisationCode</th>
+        <th onclick="sortTable(6)" style="cursor: pointer;">Startdatum</th>
+        <th onclick="sortTable(7)" style="cursor: pointer;">Slutdatum</th>
     </tr>
 
     {% for item in organisations %}
@@ -136,6 +136,23 @@ def view_data():
     </tr>
     {% endfor %}
 </table>
+<script>
+function sortTable(columnIndex) {
+    const table = document.getElementById("forskolorTable");
+    const rows = Array.from(table.rows).slice(1);
+
+    rows.sort(function(a, b) {
+        const valueA = a.cells[columnIndex].innerText.trim();
+        const valueB = b.cells[columnIndex].innerText.trim();
+
+        return valueA.localeCompare(valueB, "sv");
+    });
+
+    rows.forEach(function(row) {
+        table.appendChild(row);
+    });
+}
+</script>
 """, organisations=filtered_organisations, query=query)
 
 @app.route("/download")
