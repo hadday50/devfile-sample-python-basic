@@ -137,15 +137,20 @@ def view_data():
     {% endfor %}
 </table>
 <script>
+let sortDirections = {};
 function sortTable(columnIndex) {
     const table = document.getElementById("forskolorTable");
     const rows = Array.from(table.rows).slice(1);
+    const direction = sortDirections[columnIndex] === "asc" ? "desc" : "asc";
+sortDirections[columnIndex] = direction;
 
     rows.sort(function(a, b) {
         const valueA = a.cells[columnIndex].innerText.trim();
         const valueB = b.cells[columnIndex].innerText.trim();
 
-        return valueA.localeCompare(valueB, "sv");
+
+        const comparison = valueA.localeCompare(valueB, "sv");
+        return direction === "asc" ? comparison : -comparison;
     });
 
     rows.forEach(function(row) {
