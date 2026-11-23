@@ -14,7 +14,7 @@ def home():
     return """
     <h1>MMD - Förskolor</h1>
     <form method="get" action="/view">
-    <input type="text" name="q" value="{{ query }}" placeholder="Sök namn eller skolenhetskod">
+    <input type="text" name="q" value="{{ query }}" placeholder="Sök namn, skolenhetskod, HSA eller AltID"
     <button type="submit">Sök</button>
     <a href="/view">Visa alla</a>
 </form>
@@ -46,12 +46,18 @@ def view_data():
         name = organisation.get("displayName", "").lower()
         identifiers = organisation.get("organisationIdentifiers") or []
         skolenhetskod = ""
+        hsa = ""
+        altid = ""
 
         for identifier in identifiers:
             if identifier.get("type") == "Skolenhetskod":
                 skolenhetskod = str(identifier.get("value", "")).lower()
+                elif identifier.get("type") == "HSA":
+                    hsa = str(identifier.get("value", "")).lower()
+                elif identifier.get("type") == "AltID":
+                    altid = str(identifier.get("value", "")).lower()
 
-        if not query or query in name or query in skolenhetskod:
+        if not query or query in name or query in skolenhetskod or query in hsa or query in altid:
             filtered_organisations.append(item)
 
     return render_template_string("""
